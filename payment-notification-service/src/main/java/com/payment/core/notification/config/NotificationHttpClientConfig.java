@@ -1,0 +1,23 @@
+package com.payment.core.notification.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.web.client.RestTemplate;
+
+@Configuration
+public class NotificationHttpClientConfig {
+
+    @Bean("notificationRestTemplate")
+    @Primary
+    public RestTemplate notificationRestTemplate(
+            @Value("${payment.notification.http.connect-timeout-ms:3000}") int connectTimeoutMs,
+            @Value("${payment.notification.http.read-timeout-ms:5000}") int readTimeoutMs) {
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(connectTimeoutMs);
+        factory.setReadTimeout(readTimeoutMs);
+        return new RestTemplate(factory);
+    }
+}

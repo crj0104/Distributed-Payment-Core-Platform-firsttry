@@ -1,0 +1,22 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: payment-channel-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    publisher-confirm-type: correlated
+    publisher-returns: true
+
+logging:
+  level:
+    com.payment.core.channel: INFO

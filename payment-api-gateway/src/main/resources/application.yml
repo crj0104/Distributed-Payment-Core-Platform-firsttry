@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  threads:
+    virtual:
+      enabled: true
+  application:
+    name: payment-api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8858
+        port: 8719
+      filter:
+        enabled: true
+
+payment:
+  auth:
+    enabled: true
+    timestamp-skew-seconds: 300
+    nonce-ttl-seconds: 300
+    whitelist-paths:
+      - /api/v1/payments/callback
+      - /api/v1/refunds/callback
+      - /api/v1/callbacks/
+    clients:
+      payment-default-api-key-2026: payment-client-signature-secret-2026-change-me
+      payment-admin-key-2026: payment-admin-signature-secret-2026-change-me
+
+logging:
+  level:
+    com.payment.core.gateway: INFO
